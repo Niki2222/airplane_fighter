@@ -1,0 +1,20 @@
+.game-place { 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: aqua;
+}
+
+#canvas {
+    align-items: center;
+    width: 60vw;
+    height: 70vh;
+    background-image: url("../pics/stars.jpg");
+    background-size: cover;
+}
+
+#score {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}

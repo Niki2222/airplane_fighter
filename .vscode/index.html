@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Airplane fighter</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <div class="container text-center">
+      <h1>Airplane fighter</h1>
+      <div class="game-place">
+        <canvas id="canvas"></canvas>
+      </div>
+      <div style="display: none;">
+        <img id="asteroid" src="../pics/red_asteroid.png">
+        <img id="airplane" src="../pics/airplane.png">
+        <img id="laser" src="../pics/projectile2.png">
+      </div>
+      <div class="d-grid gap-2 d-md-block">
+        <br>
+        <div id="score">
+            <div>Score seconds: <span id="scoreSeconds">0</span></div> 
+            <div>Score avoided asteroids: <span id="scoreAsteroid">0</span></div>
+            <div>Score destroyed asteroids: <span id="scoreDestroyAsteroid">0</span></div>
+        </div>
+        <br>
+        <button id="start" class="btn btn-danger" type="button" onclick="startGame()">Start game</button>
+      </div>
+    </div>
+    <br>
+    <br>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
