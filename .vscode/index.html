@@ -9,25 +9,25 @@
   </head>
   <body>
     <div class="container text-center">
-      <h1>Airplane fighter</h1>
-      <div class="game-place">
-        <canvas id="canvas"></canvas>
-      </div>
-      <div style="display: none;">
-        <img id="asteroid" src="../pics/red_asteroid.png">
-        <img id="airplane" src="../pics/airplane.png">
-        <img id="laser" src="../pics/projectile2.png">
-      </div>
-      <div class="d-grid gap-2 d-md-block">
-        <br>
-        <div id="score">
-            <div>Score seconds: <span id="scoreSeconds">0</span></div> 
-            <div>Score avoided asteroids: <span id="scoreAsteroid">0</span></div>
-            <div>Score destroyed asteroids: <span id="scoreDestroyAsteroid">0</span></div>
+        <h1>Airplane fighter</h1>
+        <div class="game-place">
+            <canvas id="canvas"></canvas>
         </div>
-        <br>
-        <button id="start" class="btn btn-danger" type="button" onclick="startGame()">Start game</button>
-      </div>
+        <div style="display: none;">
+            <img id="asteroid" src="../pics/red_asteroid.png">
+            <img id="airplane" src="../pics/airplane.png">
+            <img id="laser" src="../pics/projectile.png">
+        </div>
+        <div class="d-grid gap-2 d-md-block">
+            <br>
+            <div id="score">
+                <div>Score seconds: <span id="scoreSeconds">0</span></div> 
+                <div>Score avoided asteroids: <span id="scoreAsteroid">0</span></div>
+                <div>Score destroyed asteroids: <span id="scoreDestroyAsteroid">0</span></div>
+            </div>
+            <br>
+            <button id="start" class="btn btn-danger" type="button" onclick="startGame()">Start game</button>
+        </div>
     </div>
     <br>
     <br>
