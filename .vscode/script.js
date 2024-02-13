@@ -6,24 +6,33 @@ let intervalIdCountSec;
 let intervalIdAsteroids;
 let timeRunning = true;
 let countAteroids = 0;
+let countDestroyed = 0;
 let time = 0;
 // asteroid info:
 let asteroidXPos = 0;
 let asteroidYPos = 0;
 let asteroidWidth = 30;
 let asteroidHeight = 20;
-let asteroidSpeed = .5;
+let asteroidSpeed = 0.5;
 // airplane info:
 let airplaneXPos = 150;
 let airplaneYPos = 125;
 let airplaneWidth = 25;
 let airplaneHeight = 25;
 let airplaneSpeed = 2;
-// left and right arrows:
-let leftKeyPress = false;
-let rightKeyPress = false;
+// projectile info:
+let projectileXPos = airplaneXPos;
+let projectileYPos = airplaneYPos;
+let projectileWidth = 25;
+let projectileHeight = 25;
+let projectileSpeed = 10;
+// left, right and up keys:
 const LEFT_KEY = 37;
 const RIGHT_KEY = 39;
+const UP_KEY = 38;
+let leftKeyPress = false;
+let rightKeyPress = false;
+let upKeyPress = false;
 
 document.getElementById("start").addEventListener("click", startGame);
 
@@ -40,19 +49,21 @@ function mainLoop() {
     if (gameOn) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         draw("asteroid", asteroidXPos, asteroidYPos, asteroidWidth, asteroidHeight);
+        draw("projecltile", airplaneXPos, projectileYPos, airplaneWidth, airplaneHeight);
         draw("airplane", airplaneXPos, airplaneYPos, airplaneWidth, airplaneHeight);
         asteroidMove();
         airplaneMove();
+        projectileMove();
     }
 }
 
 function draw(element, mainAx, secondAx, width, height) {
     ctx.drawImage(
-    document.getElementById(`${element}`),
-    mainAx,
-    secondAx,
-    width,
-    height
+        document.getElementById(`${element}`),
+        mainAx,
+        secondAx,
+        width,
+        height
     );
 }
 
@@ -64,27 +75,42 @@ function increaseTime() {
 
 function countTime() {
     intervalIdCountSec = setInterval(function () {
-        if (timeRunning) {
-            increaseTime();
-        }
+    if (timeRunning) {
+        increaseTime();
+    }
     }, 20);
 }
 
 function keyPressed(event) {
-    if (event.keyCode == LEFT_KEY) {
+    if (event.keyCode === LEFT_KEY) {
         leftKeyPress = true;
     }
-    if (event.keyCode == RIGHT_KEY) {
+    if (event.keyCode === RIGHT_KEY) {
         rightKeyPress = true;
+    }
+    if (event.keyCode === UP_KEY) {
+        upKeyPress = true;
     }
 }
 
 function keyReleased(event) {
-    if (event.keyCode == LEFT_KEY) {
+    if (event.keyCode === LEFT_KEY) {
         leftKeyPress = false;
     }
-    if (event.keyCode == RIGHT_KEY) {
+    if (event.keyCode === RIGHT_KEY) {
         rightKeyPress = false;
+    }
+    if (event.keyCode === UP_KEY) {
+        upKeyPress = false;
+    }
+}
+
+function projectileMove() {
+    if (upKeyPress) {
+        projectileYPos -= projectileSpeed;
+    }
+    if (projectileYPos < canvas.height - canvas.height - 10) {
+        projectileYPos = airplaneYPos;
     }
 }
 
@@ -104,7 +130,8 @@ function asteroidMove() {
         asteroidXPos = Math.floor(Math.random() * canvas.width);
     }
     asteroidCount();
-    collision();
+    airplaneCollision();
+    asteroidCollision();
 }
 
 function asteroidCount() {
@@ -114,7 +141,20 @@ function asteroidCount() {
     document.getElementById("scoreAsteroid").innerText = countAteroids;
 }
 
-function collision() {
+function asteroidCollision() {
+    let separationMargin = 10;
+    if (asteroidYPos + asteroidHeight - separationMargin >= projectileYPos 
+        && asteroidYPos <= projectileYPos + projectileHeight - separationMargin 
+        && asteroidXPos + asteroidWidth - separationMargin >= projectileXPos 
+        && asteroidXPos <= projectileXPos + projectileWidth - separationMargin) {
+        asteroidYPos = 0 - asteroidHeight;
+        asteroidXPos = Math.floor(Math.random() * canvas.width);
+        ++countDestroyed;
+        document.getElementById("scoreDestroyAsteroid").innerText = countDestroyed;
+    }
+}
+
+function airplaneCollision() {
     let separationMargin = 10;
     if (asteroidYPos + asteroidHeight - separationMargin >= airplaneYPos 
         && asteroidYPos <= airplaneYPos + airplaneHeight - separationMargin 
