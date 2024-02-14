@@ -9,11 +9,11 @@ let countAteroids = 0;
 let countDestroyed = 0;
 let time = 0;
 // asteroid info:
-let asteroidXPos = 0;
+let asteroidXPos = -10;
 let asteroidYPos = 0;
 let asteroidWidth = 30;
 let asteroidHeight = 20;
-let asteroidSpeed = 0.5;
+let asteroidSpeed = 1;
 // airplane info:
 let airplaneXPos = 150;
 let airplaneYPos = 125;
@@ -21,8 +21,8 @@ let airplaneWidth = 25;
 let airplaneHeight = 25;
 let airplaneSpeed = 2;
 // projectile info:
-let projectileXPos = airplaneXPos;
-let projectileYPos = airplaneYPos;
+let projectileXPos = 150;
+let projectileYPos = 135;
 let projectileWidth = 25;
 let projectileHeight = 25;
 let projectileSpeed = 10;
@@ -49,7 +49,7 @@ function mainLoop() {
     if (gameOn) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         draw("asteroid", asteroidXPos, asteroidYPos, asteroidWidth, asteroidHeight);
-        draw("projecltile", airplaneXPos, projectileYPos, airplaneWidth, airplaneHeight);
+        draw("projecltile", airplaneXPos, projectileYPos, projectileWidth, projectileHeight);
         draw("airplane", airplaneXPos, airplaneYPos, airplaneWidth, airplaneHeight);
         asteroidMove();
         airplaneMove();
@@ -75,9 +75,9 @@ function increaseTime() {
 
 function countTime() {
     intervalIdCountSec = setInterval(function () {
-    if (timeRunning) {
-        increaseTime();
-    }
+        if (timeRunning) {
+            increaseTime();
+        }
     }, 20);
 }
 
@@ -130,8 +130,8 @@ function asteroidMove() {
         asteroidXPos = Math.floor(Math.random() * canvas.width);
     }
     asteroidCount();
-    airplaneCollision();
     asteroidCollision();
+    airplaneCollision();
 }
 
 function asteroidCount() {
@@ -144,7 +144,6 @@ function asteroidCount() {
 function asteroidCollision() {
     let separationMargin = 10;
     if (asteroidYPos + asteroidHeight - separationMargin >= projectileYPos 
-        && asteroidYPos <= projectileYPos + projectileHeight - separationMargin 
         && asteroidXPos + asteroidWidth - separationMargin >= projectileXPos 
         && asteroidXPos <= projectileXPos + projectileWidth - separationMargin) {
         asteroidYPos = 0 - asteroidHeight;
@@ -157,7 +156,6 @@ function asteroidCollision() {
 function airplaneCollision() {
     let separationMargin = 10;
     if (asteroidYPos + asteroidHeight - separationMargin >= airplaneYPos 
-        && asteroidYPos <= airplaneYPos + airplaneHeight - separationMargin 
         && asteroidXPos + asteroidWidth - separationMargin >= airplaneXPos 
         && asteroidXPos <= airplaneXPos + airplaneWidth - separationMargin) {
         gameOver();
