@@ -8,6 +8,7 @@ let timeRunning = true;
 let countAteroids = 0;
 let countDestroyed = 0;
 let time = 0;
+let separationMargin = 10;
 // asteroid info:
 let asteroidXPos = -10;
 let asteroidYPos = 0;
@@ -59,11 +60,11 @@ function mainLoop() {
 
 function draw(element, mainAx, secondAx, width, height) {
     ctx.drawImage(
-        document.getElementById(`${element}`),
-        mainAx,
-        secondAx,
-        width,
-        height
+    document.getElementById(`${element}`),
+    mainAx,
+    secondAx,
+    width,
+    height
     );
 }
 
@@ -109,18 +110,21 @@ function projectileMove() {
     if (upKeyPress) {
         projectileYPos -= projectileSpeed;
     }
-    if (projectileYPos < canvas.height - canvas.height - 10) {
-        projectileYPos = airplaneYPos;
+    if (projectileYPos < -separationMargin) {
+        rojectileYPos = airplaneYPos + separationMargin;
     }
 }
 
 function airplaneMove() {
     if (leftKeyPress && airplaneXPos > 0) {
         airplaneXPos -= airplaneSpeed;
+        // projectileXPos = airplaneXPos;
     }
     if (rightKeyPress && airplaneXPos < canvas.width - airplaneWidth) {
         airplaneXPos += airplaneSpeed;
+        // projectileXPos = airplaneXPos;
     }
+    projectileXPos = airplaneXPos;
 }
 
 function asteroidMove() {
@@ -142,19 +146,18 @@ function asteroidCount() {
 }
 
 function asteroidCollision() {
-    let separationMargin = 10;
     if (asteroidYPos + asteroidHeight - separationMargin >= projectileYPos 
         && asteroidXPos + asteroidWidth - separationMargin >= projectileXPos 
         && asteroidXPos <= projectileXPos + projectileWidth - separationMargin) {
         asteroidYPos = 0 - asteroidHeight;
         asteroidXPos = Math.floor(Math.random() * canvas.width);
+        projectileYPos = airplaneYPos + separationMargin;
         ++countDestroyed;
         document.getElementById("scoreDestroyAsteroid").innerText = countDestroyed;
     }
 }
 
 function airplaneCollision() {
-    let separationMargin = 10;
     if (asteroidYPos + asteroidHeight - separationMargin >= airplaneYPos 
         && asteroidXPos + asteroidWidth - separationMargin >= airplaneXPos 
         && asteroidXPos <= airplaneXPos + airplaneWidth - separationMargin) {
