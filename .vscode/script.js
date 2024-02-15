@@ -60,11 +60,11 @@ function mainLoop() {
 
 function draw(element, mainAx, secondAx, width, height) {
     ctx.drawImage(
-    document.getElementById(`${element}`),
-    mainAx,
-    secondAx,
-    width,
-    height
+        document.getElementById(`${element}`),
+        mainAx,
+        secondAx,
+        width,
+        height
     );
 }
 
@@ -110,19 +110,18 @@ function projectileMove() {
     if (upKeyPress) {
         projectileYPos -= projectileSpeed;
     }
-    if (projectileYPos < -separationMargin) {
-        rojectileYPos = airplaneYPos + separationMargin;
+    if (!upKeyPress && projectileYPos < airplaneYPos - separationMargin
+        || projectileYPos <= -separationMargin) {
+        projectileYPos = airplaneYPos + separationMargin;
     }
 }
 
 function airplaneMove() {
     if (leftKeyPress && airplaneXPos > 0) {
         airplaneXPos -= airplaneSpeed;
-        // projectileXPos = airplaneXPos;
     }
     if (rightKeyPress && airplaneXPos < canvas.width - airplaneWidth) {
         airplaneXPos += airplaneSpeed;
-        // projectileXPos = airplaneXPos;
     }
     projectileXPos = airplaneXPos;
 }
@@ -131,7 +130,7 @@ function asteroidMove() {
     asteroidYPos += asteroidSpeed;
     if (asteroidYPos > canvas.height) {
         asteroidYPos = 0 - asteroidHeight;
-        asteroidXPos = Math.floor(Math.random() * canvas.width);
+        asteroidXPos = Math.floor(Math.random() * (canvas.width - separationMargin));
     }
     asteroidCount();
     asteroidCollision();
